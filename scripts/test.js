@@ -33,7 +33,12 @@ async function test() {
       omitMetadata: true,
       parallel: 1,
       itemCallback: item => {
-        if (!item.status.ok && item.status.reason !== 'Timed out') {
+        stats.channels++
+        if (
+          !item.status.ok &&
+          item.status.reason !== 'Timed out' &&
+          item.status.reason !== 'Duplicate'
+        ) {
           stats.failures++
 
           helper.writeToLog(country.url, item.status.reason, item.url)
